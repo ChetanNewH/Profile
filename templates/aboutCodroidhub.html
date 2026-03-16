@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chetan | Portfolio | About-CodroidHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* ========== Global Styles ========== */
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #f8fafc;
+      background: linear-gradient(120deg, #050505, #0f0f0f, #060606);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Floating glow effect */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: radial-gradient(circle at 20% 20%, rgba(0,255,100,0.08) 0%, transparent 30%),
+                        radial-gradient(circle at 80% 80%, rgba(150,0,255,0.08) 0%, transparent 30%);
+      z-index: 0;
+      animation: floatGlow 10s linear infinite alternate;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      padding: 18px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,255,136,0.2);
+      box-shadow: 0 5px 20px rgba(0,255,136,0.05);
+      animation: slideDown 1.2s ease forwards;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 700;
+      color: #00ff88;
+      letter-spacing: 1px;
+      text-shadow: 0 0 12px rgba(0,255,100,0.3);
+      cursor: pointer;
+    }
+
+    nav a {
+      margin-left: 25px;
+      color: #f8fafc;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover { color: #8b5cf6; }
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background-color: #8b5cf6;
+      transition: width 0.3s ease;
+    }
+    nav a:hover::after { width: 100%; }
+
+    nav a.active {
+      color: #00ff88;
+      text-shadow: 0 0 10px rgba(0,255,100,0.3);
+    }
+    nav a.active::after { width: 100%; }
+
+    /* Main Section */
+    main {
+      z-index: 1;
+      max-width: 950px;
+      margin: 140px auto 80px;
+      padding: 50px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(139,92,246,0.1);
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    main h1 {
+      color: #00ff88;
+      font-size: 42px;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(0,255,136,0.4);
+      margin-bottom: 25px;
+    }
+
+    main p {
+      color: #d1d5db;
+      line-height: 1.8;
+      font-size: 17px;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    /* Social Links */
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin: 50px 0;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      background: rgba(139,92,246,0.1);
+      border: 1px solid rgba(139,92,246,0.4);
+      color: #8b5cf6;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(139,92,246,0.15);
+    }
+
+    .social-links a:hover {
+      background: rgba(139,92,246,0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(139,92,246,0.4);
+    }
+
+    .social-links img {
+      width: 22px;
+      height: 22px;
+      filter: brightness(0) invert(1);
+    }
+
+    /* Feedback */
+    .feedback-section {
+      border-top: 2px solid rgba(0,255,136,0.2);
+      padding-top: 40px;
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .feedback-card {
+      background: rgba(0,255,136,0.08);
+      border: 1px solid rgba(0,255,136,0.3);
+      padding: 25px 30px;
+      border-radius: 15px;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: 0 8px 20px rgba(0,255,136,0.2);
+      transition: all 0.4s ease;
+      color: #b5ffd5;
+    }
+
+    .feedback-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0,255,136,0.35);
+    }
+
+    .feedback-card p {
+      font-style: italic;
+      color: #a7f3d0;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .student-name {
+      color: #00ff88;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: #0a0a0a;
+      color: #94a3b8;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 15px;
+    }
+
+    footer a {
+      color: #00ff88;
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    /* Animations */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes floatGlow {
+      from { transform: translateY(0); }
+      to { transform: translateY(-25px); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header { padding: 18px 25px; }
+      .logo { font-size: 22px; }
+      nav a { margin-left: 15px; font-size: 15px; }
+      main { padding: 30px 20px; margin: 120px 20px; }
+      .social-links { flex-direction: column; gap: 15px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">CHETAN</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About Me</a>
+      <a href="/aboutCodroidhub" class="active">CodroidHub</a>
+      <a href="/projects">Projects</a>
+      <a href="https://github.com/ChetanNewH" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/company/codroidhub" target="_blank">LinkedIn</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>About CodroidHub</h1>
+    <p>
+      CodroidHub is a futuristic tech community empowering learners to master real-world
+      development, AI, and data science. We believe that knowledge gains power when it’s applied,
+      explored, and shared.
+    </p>
+    <p>
+      Our mission is to transform curious learners into confident innovators — connecting ideas
+      with execution, creativity with code, and students with opportunities to grow.
+    </p>
+
+    <section class="social-links">
+      <a href="https://codroidhub.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/841/841364.png" alt="Website Icon" /> Website
+      </a>
+      <a href="https://github.com/CodroidHub" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub Icon" /> GitHub
+      </a>
+      <a href="https://www.linkedin.com/company/codroidhub" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn Icon" /> LinkedIn
+      </a>
+      <!-- <a href="blogs.html">
+        <img src="https://cdn-icons-png.flaticon.com/512/1355/1355443.png" alt="Blog Icon" /> Blogs
+      </a> -->
+    </section>
+
+    <section class="feedback-section">
+      <div class="feedback-card">
+        <p>"CodroidHub helped me grow from a beginner to a confident developer — the futuristic approach and mentorship changed my journey!"</p>
+        <div class="student-name">— Chetan, Associate Data-science Intern</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 CodroidHub | Designed by <a href="#">Chetan</a></p>
+  </footer>
+</body>
+</html>

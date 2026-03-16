@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Scraping | CodroidHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #0a0a0a, #1a1a1a, #0a0a0a);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+      color: #f8fafc;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: radial-gradient(circle at 25% 25%, rgba(168,85,247,0.15) 0%, transparent 25%),
+                        radial-gradient(circle at 75% 75%, rgba(0,255,128,0.15) 0%, transparent 25%);
+      animation: floatGlow 12s linear infinite alternate;
+      z-index: 0;
+    }
+
+    /* Header */
+    header {
+      background: rgba(255,255,255,0.04);
+      padding: 20px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      animation: slideDown 1s ease forwards;
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 24px;
+      color: #00ff99;
+      text-shadow: 0 0 12px #00ff99;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    nav a {
+      color: #f8fafc;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #a855f7;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after { width: 100%; }
+    nav a:hover { color: #a855f7; }
+    nav a.active { color: #00ff99; text-shadow: 0 0 10px #00ff99; }
+    nav a.active::after { width: 100%; background-color: #00ff99; }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 100px 20px 40px;
+      position: relative;
+      z-index: 1;
+      animation: fadeInUp 1.2s ease;
+    }
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 40px;
+      color: #00ff99;
+      margin-bottom: 20px;
+      text-shadow: 0 0 12px #00ff99;
+    }
+    .hero p {
+      max-width: 750px;
+      margin: 0 auto;
+      font-size: 18px;
+      line-height: 1.7;
+      color: #ccc;
+    }
+
+    /* Info Section */
+    .info {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(168,85,247,0.2);
+      border-radius: 16px;
+      margin: 60px auto;
+      max-width: 900px;
+      padding: 40px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+      animation: fadeInUp 1.4s ease;
+    }
+    .info h2 {
+      color: #a855f7;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 26px;
+      margin-bottom: 15px;
+      text-shadow: 0 0 8px #a855f7;
+    }
+    .info ul {
+      margin: 20px 0;
+      padding-left: 20px;
+    }
+    .info li {
+      margin-bottom: 12px;
+      color: #d1d5db;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* Project Cards */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto 80px;
+      z-index: 1;
+      animation: fadeInUp 1.6s ease;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(168,85,247,0.2);
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      border-color: #00ff99;
+      box-shadow: 0 10px 35px rgba(168,85,247,0.4);
+    }
+    .card img {
+      width: 70px;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 10px rgba(168,85,247,0.5));
+    }
+    .card h3 {
+      color: #00ff99;
+      font-size: 20px;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 10px;
+    }
+    .card p {
+      color: #bbb;
+      font-size: 15px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .card a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      background: linear-gradient(90deg, #00ff99, #a855f7);
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 0 15px rgba(168,85,247,0.4);
+    }
+    .card a:hover {
+      box-shadow: 0 0 25px rgba(0,255,128,0.6);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #aaa;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    /* Animations */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes floatGlow {
+      from { transform: translateY(0); }
+      to { transform: translateY(-30px); }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header { padding: 15px 25px; flex-direction: column; align-items: flex-start; }
+      nav a { margin: 10px 0 0 0; }
+      .hero h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">CodroidHub</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/aboutUs">About Us</a>
+      <a href="/aboutCodroid">CodroidHub</a>
+      <a href="https://github.com/CodroidHub" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/company/codroidhub" target="_blank">LinkedIn</a>
+      <a href="/blogs">Blogs</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Web Scraping Projects</h1>
+    <p>Uncover the power of automation and data extraction. Learn to gather, clean, and analyze web data with Python tools like BeautifulSoup, Selenium, and Scrapy — the smart way.</p>
+  </section>
+
+  <section class="info">
+    <h2>What You’ll Learn 💡</h2>
+    <ul>
+      <li>Automate data extraction from real-world websites</li>
+      <li>Use Python libraries like <b>BeautifulSoup</b>, <b>Scrapy</b>, and <b>Selenium</b></li>
+      <li>Store and clean your data efficiently for analytics</li>
+      <li>Build mini-projects with real datasets</li>
+    </ul>
+  </section>
+
+  <section class="projects">
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/270/270798.png" alt="Books Icon">
+      <h3>Book Scraper</h3>
+      <p>Learn to extract book details such as titles, prices, and ratings using BeautifulSoup.</p>
+      <a href="/scrape_books">Explore</a>
+    </div>
+
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="Laptop Icon">
+      <h3>Laptop Scraper</h3>
+      <p>Scrape and compare laptop prices from Flipkart with Scrapy framework.</p>
+      <a href="/scrape_flipkart">Explore</a>
+    </div>
+
+    <div class="card">
+      <img src="https://cdn-icons-png.flaticon.com/512/1998/1998592.png" alt="Quotes Icon">
+      <h3>Goodreads Quotes</h3>
+      <p>Scrape motivational quotes and build insights about authors with Flask integration.</p>
+      <a href="/scrape_goodreads">Explore</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 CodroidHub | Crafted with 💚 by Chetan
+  </footer>
+
+</body>
+</html>

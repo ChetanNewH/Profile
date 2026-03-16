@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chetan | Portfolio | About</title>
+
+  <style>
+    /* Reset & Theme */
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #f8fafc;
+      background: linear-gradient(120deg, #0a0a0a, #1a1a1a, #0a0a0a);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: radial-gradient(circle at 25% 25%, rgba(132,56,248,0.15) 0%, transparent 25%),
+                        radial-gradient(circle at 75% 75%, rgba(0,255,128,0.15) 0%, transparent 25%);
+      animation: floatGlow 12s linear infinite alternate;
+      z-index: 0;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+      animation: slideDown 1s ease forwards;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 700;
+      color: #00ff99;
+      text-shadow: 0 0 15px #00ff99;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      margin-left: 25px;
+      text-decoration: none;
+      color: #f8fafc;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 3px;
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #a855f7; /* Purple accent */
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after { width: 100%; }
+    nav a:hover { color: #a855f7; }
+
+    nav a.active {
+      color: #00ff99;
+      text-shadow: 0 0 8px #00ff99;
+    }
+
+    nav a.active::after {
+      width: 100%;
+      background-color: #00ff99;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 50px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 15px;
+      animation: fadeInUp 1.2s ease forwards;
+    }
+
+    .hero p {
+      max-width: 700px;
+      font-size: 18px;
+      color: #b0b0b0;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeInUp 1.8s ease forwards;
+    }
+
+    /* Content */
+    .content {
+      padding: 80px 8%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transition: all 0.4s ease;
+      opacity: 0;
+      animation: fadeInScroll 1s ease forwards;
+      border: 1px solid rgba(168,85,247,0.2);
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 10px 30px rgba(168,85,247,0.4);
+      border-color: #00ff99;
+    }
+
+    .card h2 {
+      color: #00ff99;
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .card p {
+      color: #cbd5e1;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    /* Feedback */
+    .feedback-box {
+      text-align: center;
+      background: rgba(168,85,247,0.1);
+      border: 2px solid #ffffff;
+      border-radius: 12px;
+      margin: 50px auto;
+      padding: 25px 30px;
+      font-weight: 600;
+      color: #f1f1f1;
+      max-width: 600px;
+      box-shadow: 0 0 20px rgba(168,85,247,0.4);
+      opacity: 0;
+      animation: fadeInUp 1.2s ease forwards;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(255,255,255,0.04);
+      color: #94a3b8;
+      font-size: 14px;
+      z-index: 1;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    footer a {
+      color: #00ff99;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+      color: #a855f7;
+    }
+
+    /* Animations */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes floatGlow {
+      from { transform: translateY(0); }
+      to { transform: translateY(-30px); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInScroll {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 20px; flex-direction: column; }
+      nav a { margin: 10px 0 0 0; display: block; }
+      .hero h1 { font-size: 36px; }
+      .content { padding: 60px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">CHETAN</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about"  class="active">About Me</a>
+      <a href="/aboutCodroidhub">CodroidHub</a>
+      <a href="/projects">Projects</a>
+      <a href="https://github.com/ChetanNewH" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/company/codroidhub" target="_blank">LinkedIn</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>The Student Journey</h1>
+    <p>At CodroidHub, we transform curiosity into capability — guiding learners from understanding fundamentals to mastering real-world data science and development challenges.</p>
+  </section>
+
+  <section class="content">
+    <div class="card">
+      <h2>🚀 Growth Mindset</h2>
+      <p>Every challenge is an opportunity. We inspire students to explore new technologies, experiment fearlessly, and turn setbacks into stepping stones toward mastery.</p>
+    </div>
+
+    <div class="card">
+      <h2>💡 Hands-On Experience</h2>
+      <p>Our approach bridges theory and practice — offering interactive projects, live data applications, and teamwork that reflects real-world environments.</p>
+    </div>
+
+    <div class="card">
+      <h2>🤝 Mentor Support</h2>
+      <p>Our mentors guide, motivate, and provide personalized feedback, ensuring every learner grows with confidence and clarity in their professional path.</p>
+    </div>
+  </section>
+
+  <div class="feedback-box">
+    Feedback and improvement — the heartbeat of continuous learning.
+  </div>
+
+  <footer>
+    <p>© 2025 CodroidHub | Designed by <a href="#">Chetan</a></p>
+  </footer>
+</body>
+</html>
